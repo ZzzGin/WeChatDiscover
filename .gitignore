@@ -1,0 +1,8 @@
+# WeChat Documents extracted from iphone backup files
+/Documents
+
+# .vscode setting file
+/.vscode
+
+# python byte code files
+*.pyc
