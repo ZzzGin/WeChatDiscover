@@ -2,6 +2,7 @@ from hashlib import md5
 import sqlite3
 import datetime
 import collections
+import string
 from Errors import UserNameQueryError
 
 class DbManager:
@@ -15,6 +16,7 @@ class DbManager:
         self.__dataLength = 0
         self.__ContactConn = sqlite3.connect(self.__documentRoot+"/"+self.__accountMD5+"/DB/WCDB_Contact.sqlite")
         self.__MessageConn = sqlite3.connect(self.__documentRoot+"/"+self.__accountMD5+"/DB/MM.sqlite")
+        self.__nameIdMap = []
         
     def mergeAllTrunksToTuple(self):
         o = ()
@@ -33,6 +35,7 @@ class DbManager:
         ContactCursor.execute('SELECT "dbContactRemark","userName" FROM "main"."Friend"')
         friendListFromDb = ContactCursor.fetchall()
         friendList = [(f[0].decode("utf-8"), f[1]) for f in friendListFromDb]
+        self.__nameIdMap = friendList
         foundFromDb = []
         for f in friendList:
             if name in f[0]:
@@ -69,7 +72,8 @@ class DbManager:
         if el!="":
             raise UserNameQueryError(el)
 
-
+    def getFrindList(self):
+        return tuple([(f[0].split("\x00")[0][2:], f[1])for f in self.__nameIdMap])
 
 
 if __name__ == "__main__":
@@ -80,4 +84,13 @@ if __name__ == "__main__":
     print(len(t1))
     t2 = dbManager.mergeSelectedTrunksToTuple(0)
     print(len(t2))
+    tfl = dbManager.getFrindList()
+
+    # dbManager = DbManager("D:/WeChatDiscover/Documents", "8087586da2b75fedcfbcfd0e7662ad1a", False)
+    # dbManager.updateFromList(["xuanshihua", "wanghui"])
+    # print(dbManager.dataTrunkInfo)
+    # t1 = dbManager.mergeAllTrunksToTuple()
+    # print(len(t1))
+    # t2 = dbManager.mergeSelectedTrunksToTuple(0)
+    # print(len(t2))
     pass
