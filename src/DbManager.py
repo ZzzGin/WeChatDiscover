@@ -73,7 +73,7 @@ class DbManager:
             raise UserNameQueryError(el)
 
     def getFrindList(self):
-        return tuple([(f[0].split("\x00")[0][2:], f[1])for f in self.__nameIdMap])
+        return {f[1]: f[0].split("\x00")[0][2:] for f in self.__nameIdMap}
 
 
 if __name__ == "__main__":
