@@ -42,10 +42,10 @@ class DbManager:
             if f.endswith("@chatroom")==self.__isChatRoom:
                 userOrChatRoomFound.append(f)
         if len(userOrChatRoomFound)==0:
-            raise UserNameQueryError("Can not find user/chatroom whose WeChatID, UserName, Alias, Pinyin of Alias similar to '" + name + "'")
+            raise UserNameQueryError(" > UserNameQueryError: Can not find user/chatroom whose WeChatID, UserName, Alias, Pinyin of Alias similar to '" + name + "'")
         elif len(userOrChatRoomFound)>1:
             el = [e for e in userOrChatRoomFound]
-            raise UserNameQueryError("More than one user/chatroom similar to '" + name + "' are found: " + str(el))
+            raise UserNameQueryError(" > UserNameQueryError: More than one user/chatroom similar to '" + name + "' are found: " + str(el))
         
         MessageCursor = self.__MessageConn.cursor()
         m = md5()
