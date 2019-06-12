@@ -1,3 +1,3 @@
-def CharacterCounterForEachMenber_CR(input, cache):
+def CharacterCounterForEachMenber_CR(historyData, cache):
     cache["test"] = "test"
     return True

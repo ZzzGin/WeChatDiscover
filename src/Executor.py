@@ -10,11 +10,11 @@ class Discoverer:
     
     def addWork(self, w):
         if w.__code__.co_argcount < 2:
-            raise AddWorkError(" > AddWorkError: The variables of the analysis function should be ('input', 'cache')")
-        if w.__code__.co_varnames[:2] == ("input", "cache"):
+            raise AddWorkError(" > AddWorkError: The variables of the analysis function should be ('historyData', 'cache')")
+        if w.__code__.co_varnames[:2] == ("historyData", "cache"):
             self.works.append(clock(w))
         else:
-            raise AddWorkError(" > AddWorkError: The variables of the analysis function should be ('input', 'cache')")
+            raise AddWorkError(" > AddWorkError: The variables of the analysis function should be ('historyData', 'cache')")
     
     def addWorks(self, *ws):
         for w in ws:

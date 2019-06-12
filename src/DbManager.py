@@ -31,13 +31,14 @@ class DbManager:
         return o
     
     def update(self, name):
-        ContactCursor = self.__ContactConn.cursor()
-        ContactCursor.execute('SELECT "dbContactRemark","userName" FROM "main"."Friend"')
-        friendListFromDb = ContactCursor.fetchall()
-        friendList = [(f[0].decode("utf-8"), f[1]) for f in friendListFromDb]
-        self.__nameIdMap = friendList
+        if self.__nameIdMap == []:
+            ContactCursor = self.__ContactConn.cursor()
+            ContactCursor.execute('SELECT "dbContactRemark","userName" FROM "main"."Friend"')
+            friendListFromDb = ContactCursor.fetchall()
+            friendList = [(f[0].decode("utf-8"), f[1]) for f in friendListFromDb]
+            self.__nameIdMap = friendList
         foundFromDb = []
-        for f in friendList:
+        for f in self.__nameIdMap:
             if name in f[0]:
                 foundFromDb.append(f[1])
         userOrChatRoomFound = []
@@ -85,12 +86,15 @@ if __name__ == "__main__":
     t2 = dbManager.mergeSelectedTrunksToTuple(0)
     print(len(t2))
     tfl = dbManager.getFrindList()
+    print(len(tfl))
 
-    # dbManager = DbManager("D:/WeChatDiscover/Documents", "8087586da2b75fedcfbcfd0e7662ad1a", False)
-    # dbManager.updateFromList(["xuanshihua", "wanghui"])
-    # print(dbManager.dataTrunkInfo)
-    # t1 = dbManager.mergeAllTrunksToTuple()
-    # print(len(t1))
-    # t2 = dbManager.mergeSelectedTrunksToTuple(0)
-    # print(len(t2))
+    dbManager = DbManager("D:/WeChatDiscover/Documents", "8087586da2b75fedcfbcfd0e7662ad1a", False)
+    dbManager.updateFromList(["xuanshihua", "wanghui"])
+    print(dbManager.dataTrunkInfo)
+    t1 = dbManager.mergeAllTrunksToTuple()
+    print(len(t1))
+    t2 = dbManager.mergeSelectedTrunksToTuple(0)
+    print(len(t2))
+    tfl = dbManager.getFrindList()
+    print(len(tfl))
     pass

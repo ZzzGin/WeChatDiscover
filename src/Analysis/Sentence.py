@@ -1,3 +1,3 @@
-def SentenceCounterForEachMenber_CR(input, cache):
+def SentenceCounterForEachMenber_CR(historyData, cache):
     r = cache["test"]
     return True
