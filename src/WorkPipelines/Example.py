@@ -12,6 +12,7 @@ history = dbm.mergeAllTrunksToTuple()
 friendList = dbm.getFrindList()
 
 disc = Discoverer()
+disc.addFileForLogger()
 disc.data = history
 disc.cache["friendList"] = friendList
 disc.cache["groupName"] = queryName

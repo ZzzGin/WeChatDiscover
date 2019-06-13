@@ -48,18 +48,21 @@ class DbManager:
         if len(userOrChatRoomFound)==0:
             raise UserNameQueryError(" > UserNameQueryError: Can not find user/chatroom whose WeChatID, UserName, Alias, Pinyin of Alias similar to '" + name + "'")
         elif len(userOrChatRoomFound)>1:
-            el = [e for e in userOrChatRoomFound]
+            fil = self.getFrindList()
+            el = [e + ": " + fil[e] for e in userOrChatRoomFound]
             raise UserNameQueryError(" > UserNameQueryError: More than one user/chatroom similar to '" + name + "' are found: " + str(el))
-        
+        self.updateById(userOrChatRoomFound[0], name)
+    
+    def updateById(self, weChatId, name):
         MessageCursor = self.__MessageConn.cursor()
         m = md5()
-        m.update(userOrChatRoomFound[0].encode('utf-8'))
+        m.update(weChatId.encode('utf-8'))
         userMd5 = m.hexdigest()
         MessageCursor.execute('SELECT * FROM "chat_' + userMd5 + '"')
         dataQueried = MessageCursor.fetchall()
         if len(dataQueried) > 0:
             self.__dataTrunk.append(dataQueried)
-            self.dataTrunkInfo.append((self.__dataTrunkCounter, name, len(dataQueried), userOrChatRoomFound[0]))
+            self.dataTrunkInfo.append((self.__dataTrunkCounter, name, len(dataQueried), weChatId))
             self.__dataTrunkCounter += 1
             self.__dataLength += len(dataQueried)
         
@@ -74,7 +77,7 @@ class DbManager:
             raise UserNameQueryError(el)
 
     def getFrindList(self):
-        return {f[1]: f[0].split("\x00")[0][2:] for f in self.__nameIdMap}
+        return {f[1]: f[0].split("\x00")[0][2:].strip("\x12") for f in self.__nameIdMap}
 
 
 if __name__ == "__main__":

@@ -64,12 +64,14 @@ class Discoverer:
                 fws.append(failedWork)
         self.failedWorks = fws
 
-    def addFileForLogger(self, fd):
+    def addFileForLogger(self, fd=""):
+        if fd=="":
+            fd = self.cache["outputFolder"] + "\\output.log"
         file_handler = logging.FileHandler(fd)
         formatter = logging.Formatter('%(message)s')
         file_handler.setFormatter(formatter)
         self.logger.addHandler(file_handler)
-
+    
 class Cache(dict):
     def __getitem__(self, key):
         try:
