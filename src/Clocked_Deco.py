@@ -1,22 +1,23 @@
 import time
 from Errors import CacheKeyError
 
-def clock(func):
+def clock(func, logger):
     def clocked(*args):
         t0 = time.perf_counter()
         try:
+            name = func.__name__
+            logger.info('[Info] Work: "%s" started.' % (name))
             result = func(*args)
             elapsed = time.perf_counter()-t0
-            name = func.__name__
             # arg_str = ", ".join(repr(arg) for arg in args)
             # print('[%0.8fs] %s(%s) -> %r' % (elapsed, name, arg_str, result))
-            print('[Done] [%0.8fs] Work: "%s" is done. Return: "%r"' % (elapsed, name, result))
+            logger.info('[Done] [%0.8fs] Work: "%s" is done. Return: "%r"' % (elapsed, name, result))
             return result
         except CacheKeyError as e:
             elapsed = time.perf_counter()-t0
             name = func.__name__
-            print('[Fail] [%0.8fs] Work: "%s" encounters an error. Return: "False"' % (elapsed, name))
-            print(e.message)
+            logger.info('[Fail] [%0.8fs] Work: "%s" encounters an error. Return: "False"' % (elapsed, name))
+            logger.info(e.message)
             return False
     return clocked
 
