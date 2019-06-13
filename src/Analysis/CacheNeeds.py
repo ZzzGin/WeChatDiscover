@@ -7,7 +7,7 @@ def needs(*ns):
         def wrapped_f(historyData, cache, logger):
             for n in ns:
                 if n not in cache:
-                    raise CacheKeyError(" > CacheKeyError: '"+ n +"'. Cache needs check failed for:" + func.__name__)
+                    raise CacheKeyError(" > CacheKeyError: '"+ n +"'. Cache needs check failed for: " + func.__name__)
             return func(historyData, cache, logger)
         return wrapped_f
     return needsChecked

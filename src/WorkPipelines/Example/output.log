@@ -1,0 +1,4 @@
+[Info] WordcloudForChatRoom added.
+[>>>>] Work: "WordcloudForChatRoom" started.
+[Fail] [0.00095740s] Work: "WordcloudForChatRoom" encounters an error. Return: "False"
+ > CacheKeyError: 'something'. Cache needs check failed for: WordcloudForChatRoom
