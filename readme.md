@@ -1,7 +1,7 @@
 # WeChat Discover
 总体而言，这是一个**易于扩展的**分析与展示微信历史数据的迷你框架。举个例子，通过这个框架，使用20行左右的代码便可以生成一个下面的微信群词云：
 
-![新生群词云.jpg]()
+![新生群词云.jpg](https://raw.githubusercontent.com/ZzzGin/WeChatDiscover/master/img/example1.png)
 
 **普通用户**可以通过易于理解的Python调用，自定义一个“流水线(Pipeline)”来使用预先备好的“分析组件(Analysis)”来分析并展示需要的信息。
 
@@ -9,7 +9,7 @@
 
 目前本框架适用于iOS微信数据，安卓版本支持正在开发中。
 
-本项目为基于个人兴趣的开源项目，采用MIT协议。
+本项目是基于个人兴趣的开源项目，采用MIT协议。
 
 1. [Todos](#todos-pr-is-welcomed)
 
