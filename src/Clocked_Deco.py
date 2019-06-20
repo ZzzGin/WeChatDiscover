@@ -6,12 +6,12 @@ def clock(func, logger):
         t0 = time.perf_counter()
         try:
             name = func.__name__
-            logger.info('[>>>>] Work: "%s" started.' % (name))
+            logger.info('[┯┯┯┯] Work: "%s" started.' % (name))
             result = func(*args)
             elapsed = time.perf_counter()-t0
             # arg_str = ", ".join(repr(arg) for arg in args)
             # print('[%0.8fs] %s(%s) -> %r' % (elapsed, name, arg_str, result))
-            logger.info('[<<<<] [%0.8fs] Work: "%s" finished. Return: "%r"' % (elapsed, name, result))
+            logger.info('[┷┷┷┷] [%0.8fs] Work: "%s" finished. Return: "%r"' % (elapsed, name, result))
             return result
         except CacheKeyError as e:
             elapsed = time.perf_counter()-t0
