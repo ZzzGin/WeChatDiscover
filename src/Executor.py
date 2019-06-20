@@ -55,6 +55,7 @@ class Discoverer:
             result = work(self.data, self.cache, self.logger)
             if result == False:
                 self.failedWorks.append(work)
+        
     
     def tryFailedWorksAgain(self):
         fws = []
