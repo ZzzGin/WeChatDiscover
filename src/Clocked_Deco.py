@@ -20,18 +20,3 @@ def clock(func, logger):
             logger.info(e.message)
             return False
     return clocked
-
-if __name__ == "__main__":
-    @clock
-    def loops(l):
-        for i in range(len(l)):
-            pair = (i, l[i])
-        return "Finished"
-
-    @clock
-    def test():
-        for i in range(1, 7):
-            lst = range(10**i)
-            loops(lst)
-        return "TestPassed"
-    test()
