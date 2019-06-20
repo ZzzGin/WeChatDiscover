@@ -25,6 +25,13 @@
 ## Requirements
 框架**本身**基于Python 3.5开发，不需要第三方模块。其他版本的Python并未测试，但是基于记忆，没有使用过Python3以后新版本的特性，理应无痛使用，未来会有所测试。Python2恕不再测试。
 
-但，由于本框架预先提供了一些有趣的分析组件，这些组件会需要第三方模块，可参阅项目文件：[requirements.txt]()
+但，由于本框架预先提供了一些有趣的分析组件，这些组件会需要第三方模块，可参阅项目文件: requirements.txt。当然，也可通过：
+``` bash
+pip install -r requirements.txt
+```
+直接安装所需模块。
+
+> 致开发者：如果您想要PR，且您PR中包含了使用新第三方模块的内容，你可以通过：`pip freeze > requirements.txt` 将你的第三方库信息放到相应文件中。
 
 ## A Perspective of This Project
+本项目源代码位于根文件目录中的`src`文件夹中。
