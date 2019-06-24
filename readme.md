@@ -114,40 +114,46 @@ pip install -r requirements.txt
     ```python
     import sys 
     import os
-    # 增添这个目录以搜索项目文件
+    ## 增添这个目录以搜索项目文件
     sys.path.append(os.path.abspath('./src')) 
     from DbManager import DbManager 
     from Executor import Discoverer
-    # import需要的分析组件
+    ## import需要的分析组件
     from Analysis import Wordcloud, Middlewares
 
-    # 关注的群名
-    queryName = "17年雪城大学新生群"
-    # 实例化一个DbManager，三个参数分别为Documents的路径，账号目录名称，是否为群
+    ## 关注的名称，推荐输入准确的全称，这里还可以输入拼音（如果你的编辑器不支持中文的话）
+    queryName = "17年雪城大学新生群" # /"17nianxuechengdaxuexinshengqun"
+    ## 实例化一个DbManager，三个参数分别为（Documents的路径，账号目录名称，是否为群），最后这个布尔值将会确定此DbManager针对的对象是群还是好友，会影响到根据名称搜索的对象。
     dbm = DbManager("D:/WeChatDiscover/Documents", "0123456789abcdef0123456789abcdef", True)
-    # 读取该群名的历史记录
+    ## 读取该名称的历史记录，并将之打包成为一个tuple，缓存在dbm中
+    ## DbManager会根据输入的名称寻找所有包含这个名称的群或者好友，如果数量不唯一，将会抛出一个UserNameQueryError异常：如果数量多于1，将会把所有满足名称的群列出，使用“准确”的名称，或者使用dbm.updateById来回避这样的错误。
     dbm.update(queryName)
-    # 返回一个tuple，记录所有历史记录
+    ## 可以使用如下方法，继续读取多个聊天记录，缓存在dbm中
+    # dbm.updateFromList(['雪城大学二手交易', '雪城大学租房群'])
+    ## 可以使用如下方法，直接使用Id来读取聊天记录，这里需要两个参数，分别是（Id，和群名），这里的群名不再是搜索的限制项，将只是用于记录的名称
+    # dbm.updataById('12345678@chatroom', "17年雪城大学新生群")
+    ## 返回一个tuple，将所有缓存的记录合并为一个tuple
     history = dbm.mergeAllTrunksToTuple()
-    # 返回一个dict，记录所有微信ID和昵称对应关系
+    ## 返回一个dict，记录所有 微信ID -> 昵称 的对应关系
     friendList = dbm.getFrindList()
 
-    # 实例化一个Discoverer
+    ## 实例化一个Discoverer
     disc = Discoverer()
-    # 添加一个文件logger，默认为新建文件夹
+    ## 添加一个文件logger，默认为在自定义流水线文件(D:/WeChatDiscover/src/WorkPipeLines/Example.py)所在位置新建同名文件夹
     disc.addFileForLogger()
-    # 像Discoverer输入历史记录
+    ## 向Discoverer输入历史记录
     disc.data = history
-    # 在cache中加入friendlist
+    ## 在cache中加入friendlist以便work对应Id和名称
     disc.cache["friendList"] = friendList
-    # 在cache中加入groupName以便输出文件名
+    ## 在cache中加入groupName以便输出文件名
     disc.cache["groupName"] = queryName
-    # 定义Pipeline， 添加一个work
+    ## 定义Pipeline， 添加一个work
     disc.addWork(Wordcloud.WordcloudForChatRoom)
-    # 你可以通过这种方式添加多个works
+    ## 你可以通过这种方式添加多个works
     # disc.addWorks(  Middlewares.textMessagesSplitedByIdInGroupChat,
     #                 Wordcloud.WordcloudForEachMembersInChatRoom)
-    # 执行Pipeline
+    ## 执行Pipeline
     disc.doWorks()
     pass
     ```
+    执行完毕后，你就能在D:/WeChatDiscover/src/WorkPipeLines/Example目录内找到log文件，与生成的词云图片。
