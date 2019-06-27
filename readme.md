@@ -24,6 +24,7 @@
 3. [Analysis] 针对好友（而非群）聊天纪录的分析组件
 4. [Analysis] 其他可能的、有趣的、有预先准备必要的分析组件
 5. [GUI] 一个基于QT的GUI
+6. [Multi-processing] 多进程支持（python不支持计算多线程）。
 ---
 
 ## Requirements:

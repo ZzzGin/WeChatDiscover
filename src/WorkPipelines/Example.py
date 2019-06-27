@@ -16,7 +16,7 @@ disc.addFileForLogger()
 disc.data = history
 disc.cache["friendList"] = friendList
 disc.cache["groupName"] = queryName
-disc.addWork(Wordcloud.WordcloudForChatRoom)
+# disc.addWork(Wordcloud.WordcloudForChatRoom)
 # disc.addWorks(  Middlewares.textMessagesSplitedByIdInGroupChat,
 #                 Wordcloud.WordcloudForEachMembersInChatRoom)
 disc.doWorks()
